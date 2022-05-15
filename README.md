@@ -12,8 +12,8 @@ cd RegMenter/src
 pip3 install -r requirements.txt
 python -m spacy download en_core_web_sm
 ```
-## Usage
-###Annotation Scheme
+## Usage:
+In the following we add some details about the usage of the RegMenter: 
 ###Training:
 The CRF sequence model is the central element of our approach. To train it with own data or other hyperparameters the script `src/list_identification/crf_model/training.py` can be used. For this, the paths to the training data must be adapted in `training.py`.
 We provide an already pre-trained model with the hyperparameters that were also used in the thesis. The hyperparameters used for training of the pre-trained model are the default values of `src/list_identification/crf_model/training.py`. The pre-trained model can be found at: `src/list_identification/crf_model/pipeline.pkl`.

@@ -4,6 +4,22 @@ List Structures in Regulatory Documents".
 Sentence boundary detection is a central component of any natural language processing application. While most research explores text segmentation as a general task, conventional sentence boundary detection systems show weaknesses in segmenting documents with domain specific formal and structural properties, such as regulatory documents. The root cause for these performance issues in processing such texts is the occurrence of complex structures, like lists or enumerations.
 With RegMenter we offer a modular SBD system, which focuses on the identification and completion of lists in regulatory documents.
 
+## Components
+The RegMenter is a fully modular SBD System consisting of the following components:
+1. `list_idenftification`: identifies sentences, lists and list items
+   - `list_identification/parser`: parse PDF documents to plaintext
+   - `list_identification/tokenizer`: tokenize plain text into token based on our tokenization strategy
+   - `list_identification/crf_model`: sequence model to detect sentence and list boundaries, consisting of:
+     - `list_identification/create_dataset_tagtog.py`: used for training to load annotated data
+     - `list_identification/crf_transformer`: transformer for feature extraction
+     - `list_identification/training.py`: can be used for training, you can add own data or change hyperparameters
+     - `list_identification/pipeline.pkl`: pre-trained model, use `joblib` to load
+   - `list_identification/lstm_models`: alternative sequence models, still under construction and not working so far
+   - `list_identification/postprecessing`: segments based on the labels of the sequence labeling model labels into sentences, list and list items and identifies the hierarchy of the list and its items
+2. `list_complementation`: used to complement the identified items into complete sentences, if a sentence is not complementable the user is notified. Finally output all detected sentences from `list_idenftification` together with the detected sentences of the complementation
+
+The final output of our SBD Systems creates for each PDF document a list of string (token) lists, where each string list represents a sentence.
+
 ## Install
 
 ```
